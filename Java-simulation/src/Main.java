@@ -1,22 +1,24 @@
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
-<<<<<<< HEAD
-        // Press Alt+Enter with your caret at the highlighted text to see how
-        // IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("how many agents do you want");
+        int numOfAgents = scanner.nextInt();
+        System.out.println("Which simulation you wanna run 1, 2 or 3");
+        int choice = scanner.nextInt();
+        scanner.close();
 
-        // Press Shift+F10 or click the green arrow button in the gutter to run the code.
-        for (int i = 1; i <= 5; i++) {
-
-            // Press Shift+F9 to start debugging your code. We have set one breakpoint
-            // for you, but you can always add more by pressing Ctrl+F8.
-            System.out.println("i = " + i);
-        } //something new
-        for (int i = 0; i < 5; i++){
-            //casual comment
+        Simulation sim = new Simulation(numOfAgents, 0.5);
+        switch (choice) {
+            case 1 -> sim.simulateTwoChoice();
+            case 2 -> sim.simulateThreeMajority();
+            case 3 -> sim.simulateUndecidedStateDynamics();
+            default -> System.out.println("Bad Choice");
         }
-=======
-        System.out.println("Hello world!");
->>>>>>> 86098a723b356aca33c7f141c21ea4ac67a69efc
+
     }
+
 }
+
+
