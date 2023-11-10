@@ -18,7 +18,7 @@ public class Simulation {
 
     public void simulateTwoChoice() {
         long startTime = System.currentTimeMillis();
-        int count = 0;
+        int count = 0, index = 0;
         while (noConsensus(opinions)) {
             List<Integer> ints = randomNums(3);
             if (opinions[ints.get(1)] == opinions[ints.get(2)]) {
@@ -26,8 +26,9 @@ public class Simulation {
 
             }
             ++count;
-            if (count % 100000 == 0) {
-                printCSV(count/100000);
+            if (count % (opinions.length/2) == 0) {
+                index++;
+                printCSV(index);
             }
         }
         long time = System.currentTimeMillis() - startTime;
