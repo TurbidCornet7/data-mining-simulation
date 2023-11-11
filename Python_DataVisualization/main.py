@@ -12,14 +12,14 @@ def createoutput(i):
             time = next(reader) #we keep the time saved somewhere
             csv_writer.writerow(['IndexAgent']+['Opinion']+['Time'])
             while 1:
-                c = reader(1)
+                c = file.read(1)
                 if not c:
                     break
                 elif c == '\n' or c == ' ' or c == '\t':
                     continue
                 else:
                     if (index == 0): 
-                        csv_writer.writerow([f'{index}']+[f'{c}']+[f'{time}'])
+                        csv_writer.writerow([f'{index}']+[f'{c}']+[f'{time[0]}'])
                     else: 
                         csv_writer.writerow([f'{index}']+[f'{c}'])
                     index += 1
@@ -49,17 +49,25 @@ def createsetoutputs(end): #end is the number of the output that we have
     with open (f'routputTot.csv', 'w') as csv_file:
         csv_writer = csv.writer(csv_file, lineterminator='\n')
         csv_writer.writerow(['IndexOutput']+['OpinionA']+['OpinionB']+['Time'])
-        for i in range(2,end,2):
+        for i in range(0,end,1):
             createoutput(i)
             opn, pop, time = counting (i)
             csv_writer.writerow([f'{i}']+[f'{pop[0]}']+[f'{pop[1]}']+[f'{time}'])
 
 def readroutputTot (): #this function is going to be used just at the end to plot graphs reading from the cleaned outputs file
-    columns = ["IndexOutput","OpinionA","OpinionB"]
+    columns = ["IndexOutput","OpinionA","OpinionB", "Time"]
     data = pd.read_csv('routputTot.csv', usecols=columns)
     df = pd.DataFrame(data)
-    fig, ax = plt.subplots()
-    ax.plot(df.IndexOutput, df.OpinionA)
-    ax.plot(df.IndexOutput, df.OpinionB)
-    plt.show()   
+    
+    fig1, ax1 = plt.subplots()
+    ax1.plot(df.IndexOutput, df.OpinionA)
+    ax1.plot(df.IndexOutput, df.OpinionB)
+
+    fig2, ax2 = plt.subplots()
+    ax2.plot(df.Time, df.OpinionA)
+    ax2.plot(df.Time, df.OpinionB)
+    plt.show()
+
+createsetoutputs(136)
+   
 
