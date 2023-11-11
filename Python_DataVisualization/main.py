@@ -27,10 +27,13 @@ def createoutput(i):
                         csv_writer.writerow([f'{index}']+[f'{c}'])
                     index += 1
 
-def counting(index):
+def counting(index, undecided):
     with open (f'order_outputs/routput{index}.csv', 'r') as csv_file:
         csv_reader = csv.DictReader(csv_file)
-        opinions_counter = Counter(['A','B'])
+        if(undecided):
+            opinions_counter = Counter(['A','B','U'])
+        else:
+            opinions_counter = Counter(['A','B'])
         firstRow = next(csv_reader)
         time = firstRow['Time']
         print(time)
@@ -48,14 +51,20 @@ def counting(index):
 
         return opinions,popularity, time
 
-def createsetoutputs(end): #end is the number of the output that we have
+def createsetoutputs(end,undecided): #end is the number of the output that we have
     with open (f'routputTot.csv', 'w') as csv_file:
         csv_writer = csv.writer(csv_file, lineterminator='\n')
-        csv_writer.writerow(['IndexOutput']+['OpinionA']+['OpinionB']+['Time'])
+        if (undecided):
+            csv_writer.writerow(['IndexOutput']+['OpinionA']+['OpinionB']+['OpinionU']+['Time'])
+        else:
+            csv_writer.writerow(['IndexOutput']+['OpinionA']+['OpinionB']+['Time'])
         for i in range(0,end,1):
             createoutput(i)
-            opn, pop, time = counting (i)
-            csv_writer.writerow([f'{i}']+[f'{pop[0]}']+[f'{pop[1]}']+[f'{time}'])
+            opn, pop, time = counting (i,True)
+            if (undecided):
+                csv_writer.writerow([f'{i}']+[f'{pop[0]}']+[f'{pop[1]}']+[f'{pop[2]}']+[f'{time}'])
+            else:
+                csv_writer.writerow([f'{i}']+[f'{pop[0]}']+[f'{pop[1]}']+[f'{time}'])
 
 def readroutputTot (): #this function is going to be used just at the end to plot graphs reading from the cleaned outputs file
     columns = ["IndexOutput","OpinionA","OpinionB", "Time"]
@@ -71,6 +80,6 @@ def readroutputTot (): #this function is going to be used just at the end to plo
     ax2.plot(df.Time, df.OpinionB)
     plt.show()
 
-createsetoutputs(13)
+createsetoutputs(72,True)
    
 
