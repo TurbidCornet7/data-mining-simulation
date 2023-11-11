@@ -2,6 +2,7 @@ import csv
 from collections import Counter
 from matplotlib import pyplot as plt
 import pandas as pd
+import re
 
 def createoutput(i):
     with open (f'outputs/output{i}.csv', 'r') as file:
@@ -10,6 +11,7 @@ def createoutput(i):
             index = 0
             csv_writer = csv.writer(new_file, lineterminator='\n')
             time = next(reader) #we keep the time saved somewhere
+            n = int(re.search(r'\d+', time[0]).group()) #if there is "Time: etc.."
             csv_writer.writerow(['IndexAgent']+['Opinion']+['Time'])
             while 1:
                 c = file.read(1)
@@ -19,7 +21,8 @@ def createoutput(i):
                     continue
                 else:
                     if (index == 0): 
-                        csv_writer.writerow([f'{index}']+[f'{c}']+[f'{time[0]}'])
+                        #csv_writer.writerow([f'{index}']+[f'{c}']+[f'{time[0]}'])
+                        csv_writer.writerow([f'{index}']+[f'{c}']+[f'{n}']) #if there is "Time: etc.."
                     else: 
                         csv_writer.writerow([f'{index}']+[f'{c}'])
                     index += 1
@@ -30,9 +33,9 @@ def counting(index):
         opinions_counter = Counter(['A','B'])
         firstRow = next(csv_reader)
         time = firstRow['Time']
+        print(time)
         for row in csv_reader:
             opinions_counter.update(row['Opinion'])
-        print(opinions_counter)
 
         opinions = []
         popularity = []
@@ -68,6 +71,6 @@ def readroutputTot (): #this function is going to be used just at the end to plo
     ax2.plot(df.Time, df.OpinionB)
     plt.show()
 
-createsetoutputs(136)
+createsetoutputs(13)
    
 
