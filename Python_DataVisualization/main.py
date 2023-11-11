@@ -4,7 +4,7 @@ from matplotlib import pyplot as plt
 
 def createoutput(i):
     with open (f'outputs/output{i}.csv', 'r') as file:
-        with open (f'order_outputs/routput{i/2}.csv', 'w') as new_file:
+        with open (f'order_outputs/routput{i}.csv', 'w') as new_file:
             index = 0
             csv_writer = csv.writer(new_file, lineterminator='\n')
             csv_writer.writerow(['IndexAgent']+['Opinion'])
@@ -50,9 +50,9 @@ def createsetoutputs(end): #end is the number of the output that we have
         csv_writer.writerow(['IndexOutput']+['OpinionA']+['OpinionB'])
         for i in range(2,end,2):
             createoutput(i)
-            opn, pop = counting (i/2)
-            csv_writer.writerow([f'{i}']+[f'{pop}'])
+            opn, pop = counting (i)
+            csv_writer.writerow([f'{i}']+[f'{pop[0]}']+[f'{pop[1]}'])
 
 
-createsetoutputs(283)
+createsetoutputs(3)
 
