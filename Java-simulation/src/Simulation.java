@@ -40,7 +40,7 @@ public class Simulation {
         csvOutputFile = new File("outputs/output" + i + ".csv");
         try (FileWriter writer = new FileWriter(csvOutputFile)) {
             String content = new String(opinions);
-            writer.write("Time: " + (time - startTime) + "ms\n" );
+            writer.write(""+ (time - startTime) + "\n" );
             writer.write(content);
         } catch (IOException e) {
             e.printStackTrace();
