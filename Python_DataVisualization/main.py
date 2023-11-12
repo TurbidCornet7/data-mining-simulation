@@ -113,27 +113,53 @@ def readroutputTot (undecided): #this function is going to be used just at the e
     plt.show()
 
 
-def compareData (): #this function is going to be used just at the end to compare the different behaviour based on the change of the number n
-    columns = ["IndexOutput","OpinionA","OpinionB","OpinionU", "Time"]
-    data = pd.read_csv('routputTot.csv', usecols=columns)
-    data2 = pd.read_csv('routputTot2.csv', usecols=columns)
-    data3 = pd.read_csv('routputTot3.csv', usecols=columns)
+# def compareData (): #this function is going to be used just at the end to compare the different behaviour based on the change of the number n
+#     columns = ["IndexOutput","OpinionA","OpinionB","OpinionU", "Time"]
+#     data = pd.read_csv('routputTot.csv', usecols=columns)
+#     data2 = pd.read_csv('routputTot2.csv', usecols=columns)
+#     data3 = pd.read_csv('routputTot3.csv', usecols=columns)
+#     df = pd.DataFrame(data)
+#     df2 = pd.DataFrame(data2)
+#     df3 = pd.DataFrame(data3)
+    
+#     fig1, ax1 = plt.subplots()
+#     ax1.bar(df.OpinionA, df.Time, label = "1mln")
+#     ax1.bar(df.OpinionB, df2.Time, label = "10mln")
+#     ax1.bar(df.OpinionU, df3.Time, label = "100mln")
+    
+#     ax1.set_xlabel('Number of Agents')
+#     ax1.set_ylabel('Time of the Simulation')
+#     ax1.set_title('Difference of time changing n')
+#     ax1.legend()
+#     ax1.grid()
+#     plt.tight_layout()
+#     plt.show()
+
+def progressionBar (undecided):
+
+    width = 0.35
+    
+    if (undecided):
+        columns = ["IndexOutput","OpinionA","OpinionB","OpinionU", "Time"]
+    else:
+        columns = ["IndexOutput","OpinionA","OpinionB", "Time"]
+    data = pd.read_csv('routputTot2.csv', usecols=columns)
     df = pd.DataFrame(data)
-    df2 = pd.DataFrame(data2)
-    df3 = pd.DataFrame(data3)
+
+    plt.bar(df.IndexOutput-width, df.OpinionA, width = 0.35, label = "A")
+    plt.bar(df.IndexOutput, df.OpinionB, width = 0.35, label = "B")
+    if (undecided): 
+        plt.bar(df.IndexOutput+width, df.OpinionU,width = 0.35, label = "U")
+
+    plt.xlabel('Number of the Iteration')
+    plt.ylabel('Number of people')
+    plt.title('Evolution of the popularity of the 2 opinions, 10mln - 2-Choice')
+    plt.legend()
+    plt.grid()
     
-    fig1, ax1 = plt.subplots()
-    ax1.bar(df.OpinionA, df.Time, label = "1mln")
-    ax1.bar(df.OpinionB, df2.Time, label = "10mln")
-    ax1.bar(df.OpinionU, df3.Time, label = "100mln")
-    
-    ax1.set_xlabel('Number of Agents')
-    ax1.set_ylabel('Time of the Simulation')
-    ax1.set_title('Difference of time changing n')
-    ax1.legend()
-    ax1.grid()
     plt.tight_layout()
     plt.show()
+
 
 def table ():
 
@@ -163,8 +189,8 @@ def table ():
     plt.show()
 
 #readroutputTot(False)
-#compareData()
+progressionBar(False)
 
-table()
+#table()
    
 
