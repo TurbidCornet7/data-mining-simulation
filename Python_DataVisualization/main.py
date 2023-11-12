@@ -113,27 +113,20 @@ def readroutputTot (undecided): #this function is going to be used just at the e
     plt.show()
 
 
-# def compareData (): #this function is going to be used just at the end to compare the different behaviour based on the change of the number n
-#     columns = ["IndexOutput","OpinionA","OpinionB","OpinionU", "Time"]
-#     data = pd.read_csv('routputTot.csv', usecols=columns)
-#     data2 = pd.read_csv('routputTot2.csv', usecols=columns)
-#     data3 = pd.read_csv('routputTot3.csv', usecols=columns)
-#     df = pd.DataFrame(data)
-#     df2 = pd.DataFrame(data2)
-#     df3 = pd.DataFrame(data3)
+def compareData (): #this function is going to be used just at the end to compare the different behaviour based on the change of the number n, i should fix it 
     
-#     fig1, ax1 = plt.subplots()
-#     ax1.bar(df.OpinionA, df.Time, label = "1mln")
-#     ax1.bar(df.OpinionB, df2.Time, label = "10mln")
-#     ax1.bar(df.OpinionU, df3.Time, label = "100mln")
+    Opinions = ["1mln","10mln","100mln"]
+    lastLines = [27646, 2453653, 2981019]
+
+    fig1, ax1 = plt.subplots()
+    ax1.bar(Opinions, lastLines)
     
-#     ax1.set_xlabel('Number of Agents')
-#     ax1.set_ylabel('Time of the Simulation')
-#     ax1.set_title('Difference of time changing n')
-#     ax1.legend()
-#     ax1.grid()
-#     plt.tight_layout()
-#     plt.show()
+    ax1.set_xlabel('Number of Agents')
+    ax1.set_ylabel('Time of the Simulation')
+    ax1.set_title('Difference of time changing n, Undecided State Dynamics')
+    ax1.legend()
+    plt.tight_layout()
+    plt.show()
 
 def progressionBar (undecided):
 
@@ -189,7 +182,7 @@ def table ():
     plt.show()
 
 #readroutputTot(False)
-progressionBar(False)
+compareData()
 
 #table()
    
