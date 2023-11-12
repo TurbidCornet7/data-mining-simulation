@@ -58,7 +58,7 @@ def createsetoutputs(end,undecided): #end is the number of the output that we ha
             csv_writer.writerow(['IndexOutput']+['OpinionA']+['OpinionB']+['OpinionU']+['Time'])
         else:
             csv_writer.writerow(['IndexOutput']+['OpinionA']+['OpinionB']+['Time'])
-        for i in range(0,end,1):
+        for i in range(8,end,1):
             createoutput(i)
             opn, pop, time = counting (i,True)
             if (undecided):
@@ -66,20 +66,105 @@ def createsetoutputs(end,undecided): #end is the number of the output that we ha
             else:
                 csv_writer.writerow([f'{i}']+[f'{pop[0]}']+[f'{pop[1]}']+[f'{time}'])
 
-def readroutputTot (): #this function is going to be used just at the end to plot graphs reading from the cleaned outputs file
-    columns = ["IndexOutput","OpinionA","OpinionB", "Time"]
-    data = pd.read_csv('routputTot.csv', usecols=columns)
-    df = pd.DataFrame(data)
-    
-    fig1, ax1 = plt.subplots()
-    ax1.plot(df.IndexOutput, df.OpinionA)
-    ax1.plot(df.IndexOutput, df.OpinionB)
+def readroutputTot (undecided): #this function is going to be used just at the end to plot graphs reading from the cleaned outputs file
 
-    fig2, ax2 = plt.subplots()
-    ax2.plot(df.Time, df.OpinionA)
-    ax2.plot(df.Time, df.OpinionB)
+
+    if (undecided):
+        columns = ["IndexOutput","OpinionA","OpinionB","OpinionU", "Time"]
+        data = pd.read_csv('routputTot.csv', usecols=columns)
+        df = pd.DataFrame(data)
+        fig1, ax1 = plt.subplots()
+        ax1.plot(df.IndexOutput, df.OpinionA, label = 'OpinionA', marker = '.')
+        ax1.plot(df.IndexOutput, df.OpinionB, label = 'OpinionB', marker = '.')
+        ax1.plot(df.IndexOutput, df.OpinionU, label = 'OpinionU', marker = '.')
+
+        fig2, ax2 = plt.subplots()
+        ax2.plot(df.Time, df.OpinionA, label = 'OpinionA')
+        ax2.plot(df.Time, df.OpinionB, label = 'OpinionB')
+        ax2.plot(df.Time, df.OpinionU, label = 'OpinionU')
+
+    else:
+        columns = ["IndexOutput","OpinionA","OpinionB", "Time"]
+        data = pd.read_csv('routputTot3.csv', usecols=columns)
+        df = pd.DataFrame(data)
+        
+        fig1, ax1 = plt.subplots()
+        ax1.plot(df.IndexOutput, df.OpinionA, label = "OpinionA")
+        ax1.plot(df.IndexOutput, df.OpinionB, label = "OpinionB")
+        
+
+        fig2, ax2 = plt.subplots()
+        ax2.plot(df.Time, df.OpinionA, label = "OpinionA")
+        ax2.plot(df.Time, df.OpinionB, label = "OpinionB")
+
+    ax1.set_xlabel('Index of the Output')
+    ax1.set_ylabel('Number of people')
+    ax1.set_title('Evolution of the Simulation 3-Majority')
+    ax1.legend()
+    ax1.grid()
+    
+    ax2.set_xlabel('Time')
+    ax2.set_ylabel('Number of people')
+    ax2.set_title('Evolution of the Simulation 3-Majority:')
+    ax2.legend()
+    ax2.grid()
+    
+    plt.tight_layout()
     plt.show()
 
-createsetoutputs(72,True)
+
+def compareData (): #this function is going to be used just at the end to compare the different behaviour based on the change of the number n
+    columns = ["IndexOutput","OpinionA","OpinionB","OpinionU", "Time"]
+    data = pd.read_csv('routputTot.csv', usecols=columns)
+    data2 = pd.read_csv('routputTot2.csv', usecols=columns)
+    data3 = pd.read_csv('routputTot3.csv', usecols=columns)
+    df = pd.DataFrame(data)
+    df2 = pd.DataFrame(data2)
+    df3 = pd.DataFrame(data3)
+    
+    fig1, ax1 = plt.subplots()
+    ax1.bar(df.OpinionA, df.Time, label = "1mln")
+    ax1.bar(df.OpinionB, df2.Time, label = "10mln")
+    ax1.bar(df.OpinionU, df3.Time, label = "100mln")
+    
+    ax1.set_xlabel('Number of Agents')
+    ax1.set_ylabel('Time of the Simulation')
+    ax1.set_title('Difference of time changing n')
+    ax1.legend()
+    ax1.grid()
+    plt.tight_layout()
+    plt.show()
+
+def table ():
+
+    fig, ax = plt.subplots()
+
+    # hide axes
+    fig.patch.set_visible(False)
+    ax.axis('off')
+    ax.axis('tight')
+
+    columns_names = ["1mln, 10mln, 100mln"]
+
+    data = {
+        "1mln": [898144, 586594, 27646],
+        "10mln": [4279623, 3977216, 2453653],
+        "100mln": [-1, 13743251, 2981019]
+    }
+
+    df = pd.DataFrame(data, index = ["2-Choices", "3-Majority", "Undecided State Dynamics"])
+
+    print(df)
+    ax.table(cellText=df.values, rowLabels = ["2-Choices", "3-Majority", "Undecided State Dynamics"], colLabels=df.columns, loc='center')
+    
+    fig.tight_layout()
+
+    plt.tight_layout()
+    plt.show()
+
+#readroutputTot(False)
+#compareData()
+
+table()
    
 
