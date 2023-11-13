@@ -58,9 +58,9 @@ def createsetoutputs(end,undecided): #end is the number of the output that we ha
             csv_writer.writerow(['IndexOutput']+['OpinionA']+['OpinionB']+['OpinionU']+['Time'])
         else:
             csv_writer.writerow(['IndexOutput']+['OpinionA']+['OpinionB']+['Time'])
-        for i in range(8,end,1):
+        for i in range(0,end,1):
             createoutput(i)
-            opn, pop, time = counting (i,True)
+            opn, pop, time = counting (i,undecided)
             if (undecided):
                 csv_writer.writerow([f'{i}']+[f'{pop[0]}']+[f'{pop[1]}']+[f'{pop[2]}']+[f'{time}'])
             else:
@@ -85,12 +85,12 @@ def readroutputTot (undecided): #this function is going to be used just at the e
 
     else:
         columns = ["IndexOutput","OpinionA","OpinionB", "Time"]
-        data = pd.read_csv('routputTot3.csv', usecols=columns)
+        data = pd.read_csv('routputTot.csv', usecols=columns)
         df = pd.DataFrame(data)
         
         fig1, ax1 = plt.subplots()
-        ax1.plot(df.IndexOutput, df.OpinionA, label = "OpinionA")
-        ax1.plot(df.IndexOutput, df.OpinionB, label = "OpinionB")
+        ax1.plot(df.IndexOutput, df.OpinionA, label = "OpinionA",marker = '.')
+        ax1.plot(df.IndexOutput, df.OpinionB, label = "OpinionB",marker = '.')
         
 
         fig2, ax2 = plt.subplots()
@@ -99,13 +99,13 @@ def readroutputTot (undecided): #this function is going to be used just at the e
 
     ax1.set_xlabel('Index of the Output')
     ax1.set_ylabel('Number of people')
-    ax1.set_title('Evolution of the Simulation 3-Majority')
+    ax1.set_title('Evolution of the Simulation 2-Choices, 10mln Agents')
     ax1.legend()
     ax1.grid()
     
     ax2.set_xlabel('Time')
     ax2.set_ylabel('Number of people')
-    ax2.set_title('Evolution of the Simulation 3-Majority:')
+    ax2.set_title('Evolution of the Simulation 2-Choices, 10mln Agents:')
     ax2.legend()
     ax2.grid()
     
@@ -116,37 +116,37 @@ def readroutputTot (undecided): #this function is going to be used just at the e
 def compareData (): #this function is going to be used just at the end to compare the different behaviour based on the change of the number n, i should fix it 
     
     Opinions = ["1mln","10mln","100mln"]
-    lastLines = [27646, 2453653, 2981019]
+    lastLines = [898144, 4279623, 18047977]
 
     fig1, ax1 = plt.subplots()
     ax1.bar(Opinions, lastLines)
     
     ax1.set_xlabel('Number of Agents')
     ax1.set_ylabel('Time of the Simulation')
-    ax1.set_title('Difference of time changing n, Undecided State Dynamics')
+    ax1.set_title('Difference of time changing n, 2-Choices')
     ax1.legend()
     plt.tight_layout()
     plt.show()
 
 def progressionBar (undecided):
 
-    width = 0.35
+    width = 0.25
     
     if (undecided):
         columns = ["IndexOutput","OpinionA","OpinionB","OpinionU", "Time"]
     else:
         columns = ["IndexOutput","OpinionA","OpinionB", "Time"]
-    data = pd.read_csv('routputTot2.csv', usecols=columns)
+    data = pd.read_csv('routputTot.csv', usecols=columns)
     df = pd.DataFrame(data)
 
-    plt.bar(df.IndexOutput-width, df.OpinionA, width = 0.35, label = "A")
-    plt.bar(df.IndexOutput, df.OpinionB, width = 0.35, label = "B")
+    plt.bar(df.IndexOutput-width, df.OpinionA, width = 0.25, label = "A")
+    plt.bar(df.IndexOutput, df.OpinionB, width = 0.25, label = "B")
     if (undecided): 
-        plt.bar(df.IndexOutput+width, df.OpinionU,width = 0.35, label = "U")
+        plt.bar(df.IndexOutput+width, df.OpinionU,width = 0.25, label = "U")
 
     plt.xlabel('Number of the Iteration')
     plt.ylabel('Number of people')
-    plt.title('Evolution of the popularity of the 2 opinions, 10mln - 2-Choice')
+    plt.title('Evolution of the popularity of the 2 opinions, 10mln - Undecided State Dynamics')
     plt.legend()
     plt.grid()
     
@@ -166,24 +166,23 @@ def table ():
     columns_names = ["1mln, 10mln, 100mln"]
 
     data = {
-        "1mln": [898144, 586594, 27646],
-        "10mln": [4279623, 3977216, 2453653],
-        "100mln": [-1, 13743251, 2981019]
+        "10mln": [2184514, 1578094, 891462],
     }
 
-    df = pd.DataFrame(data, index = ["2-Choices", "3-Majority", "Undecided State Dynamics"])
+    df = pd.DataFrame(data, index = ["2-Choices (ms)", "3-Majority (ms)", "Undecided State Dynamics (ms)"])
 
     print(df)
-    ax.table(cellText=df.values, rowLabels = ["2-Choices", "3-Majority", "Undecided State Dynamics"], colLabels=df.columns, loc='center')
+    ax.table(cellText=df.values, rowLabels = ["2-Choices (ms)", "3-Majority(ms)", "Undecided State Dynamics"], colLabels=df.columns, loc='center')
     
     fig.tight_layout()
 
     plt.tight_layout()
     plt.show()
 
+#createsetoutputs(24,False)
 #readroutputTot(False)
 compareData()
-
+#progressionBar(True)
 #table()
    
 
