@@ -1,0 +1,14 @@
+\section{Introduction}
+\label{Introduction}
+The purpose of this document is to show some simulation data for a simple randomized consensus protocol.
+At the beginning of the simulation are given a system of n agents. Each agent has an opinion, either A or B.
+The goal is that all agents update their states in discrete time steps according to a simple probabilistic interaction model to reach a consensus.
+In each time step an agent u is selected uniformly at random. The selected agent observes the opinions of other agents and then updates its state according to simple transition rules. In this model, there are many ways to solve the consensus problem:
+\begin{itemize}
+    \item \hyperref[2Choices]{2-Choices}: The selected agent u observes the opinions of two other agents selected uniformly at random. If their opinions coincide, agent u adopts it. Otherwise it retains its original opinion;
+    \item \hyperref[3Majority]{3-Majority}: The selected agent u observes the opinions of three other agents selected uniformly at random. It then adopts the majority among the sample, breaking ties randomly;
+    \item \hyperref[undecided]{Undecided State Dynamics}: The selected agent u observes the opinion of one other agent selected uniformly at random. If agent u encounters a different opinion than its own, agent u becomes “undecided”. Undecided agents adopt any (decided) opinion they encounter.
+\end{itemize}
+
+
+In the first chapter we are going to explain the simulation that has been done. Then we will show and analyze some data obtained from the simulation done according to the transition rule Two Choices, then 3-Majority and at the Undecided State Dynamics.
