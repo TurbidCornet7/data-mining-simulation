@@ -1,0 +1,27 @@
+
+
+\newenvironment{listaPersonale}[2][]{
+\begin{enumerate}[label=\textbf{\ifx&#2&\else\textbf{#2}\fi \arabic{enumi}}, ref= \ifx&#1&#2\else#1\fi \arabic{enumi}]{}
+        }{\end{enumerate}}
+
+\newenvironment{listaPersonale2}[2][]{
+\begin{enumerate}[label=\textbf{\ifx&#2&\else\textbf{#2}\fi \arabic{enumi}.\arabic{enumii}}, ref= \ifx&#1&#2\else#1\fi \arabic{enumi}.\arabic{enumii}]{}
+}{\end{enumerate}}
+
+\newenvironment{listaPersonale3}[2][]{
+\begin{enumerate}[label=\textbf{\ifx&#2&\else\textbf{#2}\fi \arabic{enumi}.\arabic{enumii}.\arabic{enumiii}}, ref= \ifx&#1&#2\else#1\fi \arabic{enumi}.\arabic{enumii}.\arabic{enumiii}]{}
+        }{\end{enumerate}}
+
+\newcommand{\elemento}[2][]{
+    \vspace{0.2cm}
+    \item\label{#2} :\ifx&#1&\else\textbf{ #1 \\}\fi
+}
+
+\captionsetup[figure]{labelformat=empty}
+
+\newcommand\blfootnote[1]{%
+  \begingroup
+  \renewcommand\thefootnote{}\footnote{#1}%
+  \addtocounter{footnote}{-1}%
+  \endgroup
+}
