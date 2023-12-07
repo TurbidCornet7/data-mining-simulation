@@ -38,10 +38,15 @@ result <- result_3 %>%
 View(result)
 
 
-transactions <- as(copied_df$Product, "transactions")
+trans <- as(copied_df$Product, "transactions")
 
-itemFrequencyPlot(transactions_3, topN=15, type="absolute", col="wheat2",xlab="Item name", 
+# Absolute Item Frequency Plot
+itemFrequencyPlot(trans, topN=15, type="absolute", col="wheat2",xlab="Item name", 
                   ylab="Frequency (absolute)", main="Absolute Item Frequency Plot")
+
+# Relative Item Frequency Plot
+itemFrequencyPlot(trans, topN=15, type="relative", col="lightcyan2", xlab="Item name", 
+                  ylab="Frequency (relative)", main="Relative Item Frequency Plot")
 
 
 
